@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory.data.Item
 import com.example.inventory.databinding.ItemListItemBinding
+import java.text.NumberFormat
 
 class ItemListAdapter(private val onItemClicked: (Item) -> Unit) :
   ListAdapter<Item, ItemListAdapter.ItemListViewHolder>(DiffCallback) {
@@ -15,12 +16,18 @@ class ItemListAdapter(private val onItemClicked: (Item) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Item) {
       binding.itemName.text = item.itemName
-      binding.itemPrice.text = item.itemPrice.toString()
+      binding.itemPrice.text = getPriceWithCurrency(item.itemPrice)
       binding.itemQuantity.text = item.quantityInStock.toString()
     }
+
+    private fun getPriceWithCurrency(value: Double): String =
+      NumberFormat.getCurrencyInstance().format(value)
   }
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
+  override fun onCreateViewHolder(
+    parent: ViewGroup,
+    viewType: Int
+  ): ItemListViewHolder {
     val viewHolder = ItemListViewHolder(
       ItemListItemBinding.inflate(
         LayoutInflater.from(parent.context),
