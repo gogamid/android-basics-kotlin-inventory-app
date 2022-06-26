@@ -1,10 +1,10 @@
 package com.example.inventory
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.inventory.data.Item
 import com.example.inventory.data.ItemDao
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
@@ -33,4 +33,6 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
     }
     return true
   }
+
+  fun getItems(): Flow<List<Item>> = itemDao.getItems()
 }
