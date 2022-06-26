@@ -41,6 +41,6 @@ Getting Started
 
 
 <img height="500" src="https://user-images.githubusercontent.com/36050790/175809342-c4437568-4743-4460-89e2-e9ebb580232e.png">
-<img height="500" src="https://user-images.githubusercontent.com/36050790/175811321-a0109a20-31f3-428c-b9a1-d6ab5ecd1318.png">
+<img height="500" src="https://user-images.githubusercontent.com/36050790/175811382-fe66e772-3980-4d22-8bc1-5060d1c56de8.png">
 
 
