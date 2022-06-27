@@ -87,6 +87,14 @@ class ItemDetailFragment : Fragment() {
         findNavController().navigateUp()
     }
 
+    private fun editItem() {
+        findNavController()
+                .navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
+                        getString(R.string.edit_fragment_title),
+                        item.id)
+                )
+    }
+
     /**
      * Called when fragment is destroyed.
      */
@@ -103,6 +111,9 @@ class ItemDetailFragment : Fragment() {
             sellItem.isEnabled = viewModel.isStockAvailable(item)
             sellItem.setOnClickListener { viewModel.sellItem(item) }
             deleteItem.setOnClickListener { showConfirmationDialog() }
+            editItem.setOnClickListener { editItem() }
         }
     }
+
+
 }
