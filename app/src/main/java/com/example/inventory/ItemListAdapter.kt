@@ -6,54 +6,51 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory.data.Item
+import com.example.inventory.data.getFormattedPrice
 import com.example.inventory.databinding.ItemListItemBinding
-import java.text.NumberFormat
+
 
 class ItemListAdapter(private val onItemClicked: (Item) -> Unit) :
-  ListAdapter<Item, ItemListAdapter.ItemListViewHolder>(DiffCallback) {
+  ListAdapter<Item, ItemListAdapter.ItemViewHolder>(DiffCallback) {
 
-  class ItemListViewHolder(private val binding: ItemListItemBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: Item) {
-      binding.itemName.text = item.itemName
-      binding.itemPrice.text = getPriceWithCurrency(item.itemPrice)
-      binding.itemQuantity.text = item.quantityInStock.toString()
-    }
-
-    private fun getPriceWithCurrency(value: Double): String =
-      NumberFormat.getCurrencyInstance().format(value)
-  }
-
-  override fun onCreateViewHolder(
-    parent: ViewGroup,
-    viewType: Int
-  ): ItemListViewHolder {
-    val viewHolder = ItemListViewHolder(
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+    return ItemViewHolder(
       ItemListItemBinding.inflate(
-        LayoutInflater.from(parent.context),
-        parent,
-        false
+        LayoutInflater.from(
+          parent.context
+        )
       )
     )
-    viewHolder.itemView.setOnClickListener {
-      val position = viewHolder.adapterPosition
-      onItemClicked(getItem(position))
-    }
-    return viewHolder
   }
 
-  override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
-    holder.bind(getItem(position))
+  override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    val current = getItem(position)
+    holder.itemView.setOnClickListener {
+      onItemClicked(current)
+    }
+    holder.bind(current)
+  }
+
+  class ItemViewHolder(private var binding: ItemListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(item: Item) {
+      binding.apply {
+        itemName.text = item.itemName
+        itemPrice.text = item.getFormattedPrice()
+        itemQuantity.text = item.quantityInStock.toString()
+      }
+    }
   }
 
   companion object {
     private val DiffCallback = object : DiffUtil.ItemCallback<Item>() {
       override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem === newItem
       }
 
       override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem == newItem
+        return oldItem.itemName == newItem.itemName
       }
     }
   }
