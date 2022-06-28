@@ -9,8 +9,7 @@ Introduction
 This app is an stater code for an Inventory tracking app. Demos how to add, update, sell, and delete
  items from the local database.
  
- ![image](https://user-images.githubusercontent.com/36050790/175809386-c180d871-352f-4b23-9818-30c58e1efeec.png)
-
+ ![image](https://user-images.githubusercontent.com/36050790/176137066-ab84e37b-0343-40ff-a567-9afc6dd07b5d.png)
  
 This app demonstrated
 the use of Android Jetpack component [Room](https://developer.android.com/training/data-storage/room) database.  
