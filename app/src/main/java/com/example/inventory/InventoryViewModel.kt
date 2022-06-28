@@ -1,5 +1,6 @@
 package com.example.inventory
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -8,6 +9,8 @@ import com.example.inventory.data.Item
 import com.example.inventory.data.ItemDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.util.*
 
 class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
     val allItems: LiveData<List<Item>> = itemDao.getItems().asLiveData()
@@ -75,8 +78,8 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
         return Item(
                 id = itemId,
                 itemName = itemName,
-                itemPrice = itemPrice.toDouble(),//TODO: check if this is correct
-                quantityInStock = itemCount.toInt()//TODO: check if this is correct
+                itemPrice = NumberFormat.getInstance(Locale.getDefault()).parse(itemPrice)!!.toDouble(),
+                quantityInStock = itemCount.toInt()
         )
     }
 
